@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 /**
@@ -6,6 +7,10 @@
  * @author: Hendrik Werner
  */
 
+void print_usage(char *name) {
+	printf("Usage: %s <mode> <value>\n", name);
+	printf("\t mode: inc | dec\n");
+}
 
 int main(int argc, char **argv) {
 	return EXIT_SUCCESS;
