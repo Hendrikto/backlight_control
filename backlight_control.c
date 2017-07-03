@@ -13,5 +13,9 @@ void print_usage(char *name) {
 }
 
 int main(int argc, char **argv) {
+	if (argc != 3) {
+		print_usage(argv[0]);
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }
