@@ -13,7 +13,7 @@
 
 void print_usage(char *name) {
 	printf("Usage: %s <mode> <value>\n", name);
-	printf("\t mode: change\n");
+	printf("\t mode: change | set\n");
 }
 
 int main(int argc, char **argv) {
@@ -27,6 +27,8 @@ int main(int argc, char **argv) {
 	fscanf(brightness, "%d", &brightness_value);
 	if (!strcmp(argv[1], "change")) {
 		brightness_value += MAX_BRIGHTNESS * value / 100;
+	} else if (!strcmp(argv[1], "set")) {
+		brightness_value = MAX_BRIGHTNESS * value / 100;
 	} else {
 		print_usage(argv[0]);
 		fclose(brightness);
