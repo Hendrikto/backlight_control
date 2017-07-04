@@ -15,4 +15,4 @@ deploy: backlight_control
 
 clean:
 	rm -f backlight_control
-	sudo rm /etc/sudoers.d/backlight
+	sudo rm -f /etc/sudoers.d/backlight
