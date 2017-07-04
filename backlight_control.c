@@ -12,8 +12,16 @@
 #define MIN_BRIGHTNESS 1
 
 void print_usage(char *name) {
-	printf("Usage: %s <mode> <value>\n", name);
-	printf("\t mode: change | set\n");
+	printf(
+		"Usage: %1$s <mode> <value>\n"
+		"\tmode: change | set\n"
+		"\n"
+		"Examples:\n"
+		"\t%1$s change +10\n"
+		"\t%1$s change -10\n"
+		"\t%1$s set 50\n",
+		name
+	);
 }
 
 int main(int argc, char **argv) {
