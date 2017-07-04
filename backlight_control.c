@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 	int value = strtol(argv[2], NULL, 10);
-	FILE *brightness = fopen("/sys/class/backlight/intel_backlight/brightness", "r+");
+	FILE *brightness = fopen(BACKLIGHT_DIR "brightness", "r+");
 	int brightness_value = 0;
 	fscanf(brightness, "%d", &brightness_value);
 	if (!strcmp(argv[1], "change")) {

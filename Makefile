@@ -6,7 +6,7 @@ all: backlight_control
 
 backlight_control: backlight_control.c
 	gcc -Wall -Wextra -O3 backlight_control.c -o backlight_control\
-		-D BACKLIGHT_DIR=$(backlight_dir)\
+		-D BACKLIGHT_DIR=\"$(backlight_dir)\"\
 		-D MAX_BRIGHTNESS=$(max_brightness)
 
 deploy: backlight_control
