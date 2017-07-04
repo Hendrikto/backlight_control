@@ -13,7 +13,7 @@
 
 void print_usage(char *name) {
 	printf("Usage: %s <mode> <value>\n", name);
-	printf("\t mode: inc | dec\n");
+	printf("\t mode: change\n");
 }
 
 int main(int argc, char **argv) {
@@ -25,17 +25,15 @@ int main(int argc, char **argv) {
 	FILE *brightness = fopen("/sys/class/backlight/intel_backlight/brightness", "r+");
 	int brightness_value = 0;
 	fscanf(brightness, "%d", &brightness_value);
-	if (!strcmp(argv[1], "inc")) {
+	if (!strcmp(argv[1], "change")) {
 		brightness_value += MAX_BRIGHTNESS * value / 100;
-		brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
-	} else if (!strcmp(argv[1], "dec")) {
-		brightness_value -= MAX_BRIGHTNESS * value / 100;
-		brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
 	} else {
 		print_usage(argv[0]);
 		fclose(brightness);
 		return EXIT_FAILURE;
 	}
+	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
+	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
 	fprintf(brightness, "%d", brightness_value);
 	fclose(brightness);
 	return EXIT_SUCCESS;
