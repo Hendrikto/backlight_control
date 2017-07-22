@@ -1,7 +1,6 @@
 #include <sys/param.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 /**
  * A program to control the backlight brightness.
@@ -24,22 +23,21 @@ void print_usage(char *name) {
 }
 
 int main(int argc, char **argv) {
-	if (argc != 3) {
+	if (argc != 2) {
 		print_usage(argv[0]);
 		return EXIT_FAILURE;
 	}
-	int value = strtol(argv[2], NULL, 10);
+	int value = strtol(argv[1], NULL, 10);
 	FILE *brightness = fopen(BACKLIGHT_DIR "brightness", "r+");
 	int brightness_value = 0;
 	fscanf(brightness, "%d", &brightness_value);
-	if (!strcmp(argv[1], "change")) {
-		brightness_value += MAX_BRIGHTNESS * value / 100;
-	} else if (!strcmp(argv[1], "set")) {
-		brightness_value = MAX_BRIGHTNESS * value / 100;
-	} else {
-		print_usage(argv[0]);
-		fclose(brightness);
-		return EXIT_FAILURE;
+	switch (argv[1][0]) {
+		case '+':
+		case '-':
+			brightness_value += MAX_BRIGHTNESS * value / 100;
+			break;
+		default:
+			brightness_value = MAX_BRIGHTNESS * value / 100;
 	}
 	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
 	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
