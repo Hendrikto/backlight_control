@@ -21,3 +21,4 @@ install: backlight_control
 
 uninstall:
 	sudo rm -f /etc/sudoers.d/backlight
+	sudo rm -f /usr/local/bin/backlight_control
