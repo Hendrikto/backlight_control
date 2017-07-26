@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS += -Wall -Wextra -O3 -march=native
 
-backlight_dir = "/sys/class/backlight/intel_backlight/"
+backlight_dir = '/sys/class/backlight/intel_backlight/'
 max_brightness = $(shell cat $(backlight_dir)max_brightness)
 backlight_rule = $(USER) ALL=NOPASSWD: /usr/local/bin/backlight_control
 
