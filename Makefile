@@ -5,7 +5,7 @@ backlight_dir = '/sys/class/backlight/intel_backlight/'
 max_brightness = $(shell cat $(backlight_dir)max_brightness)
 backlight_rule = $(USER) ALL=NOPASSWD: /usr/local/bin/backlight_control
 
-all: backlight_control install
+all: install
 
 backlight_control: backlight_control.c
 	$(CC) $(CFLAGS) $@.c -o $@\
