@@ -10,8 +10,8 @@ DEFINES += -D MAX_BRIGHTNESS=$(max_brightness)
 
 all: install
 
-backlight_control: backlight_control.c
-	$(CC) $(CFLAGS) $(DEFINES) $@.c -o $@
+%: %.c
+	$(CC) $(CFLAGS) $(DEFINES) $< -o $@
 
 clean:
 	rm -f backlight_control
