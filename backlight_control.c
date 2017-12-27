@@ -1,4 +1,3 @@
-#include <sys/param.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -9,6 +8,9 @@
  */
 
 #define MIN_BRIGHTNESS 1
+
+#define MAX(a, b) ((a > b) ? a : b)
+#define MIN(a, b) ((a < b) ? a : b)
 
 void print_usage(char *name) {
 	printf(
