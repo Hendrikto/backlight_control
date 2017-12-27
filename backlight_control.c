@@ -32,10 +32,10 @@ int main(int argc, char **argv) {
 	int value = strtol(argv[1], NULL, 10);
 	FILE *brightness = fopen(BACKLIGHT_DIR "brightness", "r+");
 	int brightness_value = 0;
-	fscanf(brightness, "%d", &brightness_value);
 	switch (argv[1][0]) {
 		case '+':
 		case '-':
+			fscanf(brightness, "%d", &brightness_value);
 			brightness_value += MAX_BRIGHTNESS * value / 100;
 			break;
 		default:
