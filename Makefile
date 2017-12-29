@@ -1,9 +1,10 @@
 CC = gcc
 CFLAGS += -Wall -Wextra -O3 -march=native
 
+prefix = /usr/local
 backlight_dir = /sys/class/backlight/intel_backlight/
 max_brightness = $(shell cat $(backlight_dir)max_brightness)
-backlight_rule = $(USER) ALL=NOPASSWD: /usr/local/bin/backlight_control
+backlight_rule = $(USER) ALL=NOPASSWD: $(prefix)/bin/backlight_control
 
 DEFINES += -D BACKLIGHT_DIR=\"$(backlight_dir)\"
 DEFINES += -D MAX_BRIGHTNESS=$(max_brightness)
@@ -18,8 +19,8 @@ clean:
 
 install: backlight_control
 	echo $(backlight_rule) | sudo tee /etc/sudoers.d/backlight
-	sudo mv $< /usr/local/bin/
+	sudo mv $< $(prefix)/bin
 
 uninstall:
 	sudo rm -f /etc/sudoers.d/backlight
-	sudo rm -f /usr/local/bin/backlight_control
+	sudo rm -f $(prefix)/bin/backlight_control
