@@ -5,17 +5,17 @@ I had some problems with `xbacklight` in combination with the proprietary nvidia
 
 ## Build
 ```sh
-make backlight_control
+make
 ```
 
 ## Install
 ```sh
-make install
+sudo make install
 ```
 
 ## Uninstall
 ```sh
-make uninstall
+sudo make uninstall
 ```
 
 ## Usage
