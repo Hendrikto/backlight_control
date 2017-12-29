@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 	}
 	int value = strtol(argv[1], NULL, 10);
 	FILE *brightness = fopen(BACKLIGHT_DIR "brightness", "r+");
-	int brightness_value = 0;
+	int brightness_value = MIN_BRIGHTNESS;
 	switch (argv[1][0]) {
 		case '+':
 		case '-':
