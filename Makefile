@@ -9,7 +9,7 @@ backlight_rule = $(USER) ALL=NOPASSWD: $(prefix)/bin/backlight_control
 DEFINES += -D BACKLIGHT_DIR=\"$(backlight_dir)\"
 DEFINES += -D MAX_BRIGHTNESS=$(max_brightness)
 
-all: install
+all: backlight_control
 
 %: %.c
 	$(CC) $(CFLAGS) $(DEFINES) $< -o $@
@@ -18,9 +18,9 @@ clean:
 	rm -f backlight_control
 
 install: backlight_control
-	echo $(backlight_rule) | sudo tee /etc/sudoers.d/backlight
-	sudo mv $< $(prefix)/bin
+	sudo mv $< $(DESTDIR)$(prefix)/bin
+	echo $(backlight_rule) | sudo tee $(DESTDIR)/etc/sudoers.d/backlight
 
 uninstall:
-	sudo rm -f /etc/sudoers.d/backlight
-	sudo rm -f $(prefix)/bin/backlight_control
+	sudo rm -f $(DESTDIR)$(prefix)/bin/backlight_control
+	sudo rm -f $(DESTDIR)/etc/sudoers.d/backlight
