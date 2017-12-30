@@ -18,9 +18,9 @@ clean:
 	rm -f backlight_control
 
 install: backlight_control
-	sudo mv $< $(DESTDIR)$(prefix)/bin
-	echo $(backlight_rule) | sudo tee $(DESTDIR)/etc/sudoers.d/backlight
+	mv $< $(DESTDIR)$(prefix)/bin
+	echo $(backlight_rule) | tee $(DESTDIR)/etc/sudoers.d/backlight
 
 uninstall:
-	sudo rm -f $(DESTDIR)$(prefix)/bin/backlight_control
-	sudo rm -f $(DESTDIR)/etc/sudoers.d/backlight
+	rm -f $(DESTDIR)$(prefix)/bin/backlight_control
+	rm -f $(DESTDIR)/etc/sudoers.d/backlight
