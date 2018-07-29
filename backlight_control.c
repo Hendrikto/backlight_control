@@ -24,13 +24,22 @@ void print_usage(char *name) {
 	);
 }
 
+FILE *open_file(char *name) {
+	FILE *file;
+	if (!(file = fopen(name, "r+"))) {
+		fprintf(stderr, "failed to open %s\n", name);
+		exit(EXIT_FAILURE);
+	}
+	return file;
+}
+
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		print_usage(argv[0]);
 		return EXIT_FAILURE;
 	}
 	int value = strtol(argv[1], NULL, 10);
-	FILE *brightness = fopen(BACKLIGHT_DIR "brightness", "r+");
+	FILE *brightness = open_file(BACKLIGHT_DIR "brightness");
 	int brightness_value = MIN_BRIGHTNESS;
 	switch (argv[1][0]) {
 		case '+':
