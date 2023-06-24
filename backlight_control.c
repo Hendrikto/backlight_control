@@ -12,7 +12,7 @@
 #define MAX(a, b) ((a > b) ? a : b)
 #define MIN(a, b) ((a < b) ? a : b)
 
-void print_usage(char *name) {
+void usage(char *name) {
 	printf(
 		"Usage: %1$s [+|-]<value>\n"
 		"\n"
@@ -35,7 +35,7 @@ FILE *open_file(char *name) {
 
 int main(int argc, char **argv) {
 	if (argc != 2) {
-		print_usage(argv[0]);
+		usage(argv[0]);
 		return EXIT_FAILURE;
 	}
 	int value = strtol(argv[1], NULL, 10);
