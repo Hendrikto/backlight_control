@@ -14,8 +14,7 @@
 
 void usage(char *name) {
 	printf(
-		"Usage: %1$s [+|-]<value>\n"
-		"\n"
+		"Usage: %1$s [+|-]<value>\n\n"
 		"Examples:\n"
 		"\t%1$s +10\n"
 		"\t%1$s -10\n"
