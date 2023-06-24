@@ -35,11 +35,14 @@ FILE *open_file(char *name) {
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		usage(argv[0]);
+
 		return EXIT_FAILURE;
 	}
+
 	int value = strtol(argv[1], NULL, 10);
 	FILE *brightness = open_file(BRIGHTNESS_FILE);
 	int brightness_value = MIN_BRIGHTNESS;
+
 	switch (argv[1][0]) {
 		case '+':
 		case '-':
@@ -49,9 +52,12 @@ int main(int argc, char **argv) {
 		default:
 			brightness_value = MAX_BRIGHTNESS * value / 100;
 	}
+
 	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
 	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
+
 	fprintf(brightness, "%d", brightness_value);
 	fclose(brightness);
+
 	return EXIT_SUCCESS;
 }
