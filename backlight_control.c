@@ -56,24 +56,27 @@ int main(int argc, char **argv) {
 	}
 
 	FILE *brightness = open_file(BRIGHTNESS_FILE);
-	long int brightness_value = MIN_BRIGHTNESS;
+	float brightness_value;
+
+	fscanf(brightness, "%e", &brightness_value);
 
 	switch (argv[1][0]) {
 		case '+':
-		case '-':
-			fscanf(brightness, "%ld", &brightness_value);
-			brightness_value += MAX_BRIGHTNESS * value / 100;
+			brightness_value += MAX_BRIGHTNESS * ((float)value / 100.0);
 
 			break;
+		case '-':
+			brightness_value -= MAX_BRIGHTNESS * ((float)value / 100.0);
 
+			break;
 		default:
-			brightness_value = MAX_BRIGHTNESS * value / 100;
+			brightness_value = MAX_BRIGHTNESS * ((float)value / 100.0);
 	}
 
 	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
 	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
 
-	fprintf(brightness, "%ld", brightness_value);
+	fprintf(brightness, "%.0f", brightness_value);
 	fclose(brightness);
 
 	return EXIT_SUCCESS;
