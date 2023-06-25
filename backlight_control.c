@@ -23,15 +23,6 @@ void usage(char *name) {
 	);
 }
 
-FILE *open_file(char *name) {
-	FILE *file;
-	if (!(file = fopen(name, "r+"))) {
-		fprintf(stderr, "failed to open %s\n", name);
-		exit(EXIT_FAILURE);
-	}
-	return file;
-}
-
 int main(int argc, char **argv) {
 	if (argc != 2) {
 		usage(argv[0]);
@@ -55,7 +46,14 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	FILE *brightness = open_file(BRIGHTNESS_FILE);
+	FILE *brightness;
+
+	if (!(brightness = fopen(BRIGHTNESS_FILE, "r+"))) {
+		fprintf(stderr, "failed to open %s\n", BRIGHTNESS_FILE);
+
+		return (EXIT_FAILURE);
+	}
+
 	float brightness_value;
 
 	fscanf(brightness, "%e", &brightness_value);
