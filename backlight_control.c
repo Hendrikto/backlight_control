@@ -46,9 +46,9 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	FILE *brightness;
+	FILE *fp;
 
-	if (!(brightness = fopen(BRIGHTNESS_FILE, "r+"))) {
+	if (!(fp = fopen(BRIGHTNESS_FILE, "r+"))) {
 		fprintf(stderr, "failed to open %s\n", BRIGHTNESS_FILE);
 
 		return (EXIT_FAILURE);
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
 
 	float brightness_value;
 
-	fscanf(brightness, "%e", &brightness_value);
+	fscanf(fp, "%e", &brightness_value);
 
 	switch (argv[1][0]) {
 		case '+':
@@ -74,8 +74,8 @@ int main(int argc, char **argv) {
 	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
 	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
 
-	fprintf(brightness, "%.0f", brightness_value);
-	fclose(brightness);
+	fprintf(fp, "%.0f", brightness_value);
+	fclose(fp);
 
 	return EXIT_SUCCESS;
 }
