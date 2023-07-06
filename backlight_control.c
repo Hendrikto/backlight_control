@@ -12,10 +12,9 @@
 #define MAX(a, b) ((a > b) ? a : b)
 #define MIN(a, b) ((a < b) ? a : b)
 
-void print_usage(char *name) {
+void usage(char *name) {
 	printf(
-		"Usage: %1$s [+|-]<value>\n"
-		"\n"
+		"Usage: %1$s [+|-]<value>\n\n"
 		"Examples:\n"
 		"\t%1$s +10\n"
 		"\t%1$s -10\n"
@@ -24,35 +23,59 @@ void print_usage(char *name) {
 	);
 }
 
-FILE *open_file(char *name) {
-	FILE *file;
-	if (!(file = fopen(name, "r+"))) {
-		fprintf(stderr, "failed to open %s\n", name);
-		exit(EXIT_FAILURE);
-	}
-	return file;
-}
-
 int main(int argc, char **argv) {
 	if (argc != 2) {
-		print_usage(argv[0]);
+		usage(argv[0]);
+
 		return EXIT_FAILURE;
 	}
-	int value = strtol(argv[1], NULL, 10);
-	FILE *brightness = open_file(BRIGHTNESS_FILE);
-	int brightness_value = MIN_BRIGHTNESS;
+
+	char *endptr;
+
+	long int value = strtol(argv[1], &endptr, 10);
+
+	if (endptr == argv[1]) {
+		fputs("brightness value must be an integer\n", stderr);
+
+		return EXIT_FAILURE;
+	}
+
+	if (!((value < 0 ? value *= -1 : value) >= 1 && value <= 100)) {
+		fputs("brightness value must be between 1 and 100 (inclusively)\n", stderr);
+
+		return EXIT_FAILURE;
+	}
+
+	FILE *fp;
+
+	if (!(fp = fopen(BRIGHTNESS_FILE, "r+"))) {
+		fprintf(stderr, "failed to open %s\n", BRIGHTNESS_FILE);
+
+		return (EXIT_FAILURE);
+	}
+
+	float brightness_value;
+
+	fscanf(fp, "%e", &brightness_value);
+
 	switch (argv[1][0]) {
 		case '+':
+			brightness_value += MAX_BRIGHTNESS * ((float)value / 100.0);
+
+			break;
 		case '-':
-			fscanf(brightness, "%d", &brightness_value);
-			brightness_value += MAX_BRIGHTNESS * value / 100;
+			brightness_value -= MAX_BRIGHTNESS * ((float)value / 100.0);
+
 			break;
 		default:
-			brightness_value = MAX_BRIGHTNESS * value / 100;
+			brightness_value = MAX_BRIGHTNESS * ((float)value / 100.0);
 	}
+
 	brightness_value = MIN(brightness_value, MAX_BRIGHTNESS);
 	brightness_value = MAX(brightness_value, MIN_BRIGHTNESS);
-	fprintf(brightness, "%d", brightness_value);
-	fclose(brightness);
+
+	fprintf(fp, "%.0f", brightness_value);
+	fclose(fp);
+
 	return EXIT_SUCCESS;
 }
